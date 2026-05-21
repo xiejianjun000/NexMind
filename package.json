@@ -1,6 +1,7 @@
 {
   "name": "nexmind",
   "version": "1.0.0",
+  "type": "module",
   "description": "NexMind - 下一代智能中枢 (Next + Mind + Nexus)",
   "author": "NexMind Team",
   "license": "MIT",
