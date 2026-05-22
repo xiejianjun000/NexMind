@@ -1,4 +1,6 @@
 // 智能体通信协议
+export { MessageType } from '../../backend/multiagent/AgentCommunicationBus';
+
 export interface AgentMessage {
   id: string;
   from: string;

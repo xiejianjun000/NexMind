@@ -1,19 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* 小黄人黄色系 */
+  --minion-yellow: #FFD700;
+  --minion-yellow-light: #FFE44D;
+  --minion-yellow-dark: #E6C200;
+  
+  /* 护目镜色 */
+  --goggles-dark: #2D2D2D;
+  --goggles-rim: #4A4A4A;
+  
+  /* 工装裤蓝 */
+  --overalls-blue: #0074D9;
+  --overalls-blue-dark: #005A9E;
+  
+  /* 背景色 */
+  --bg-primary: #0F0F1A;
+  --bg-secondary: #1A1A2E;
+  --bg-card: #252540;
+  --bg-elevated: #2E2E4D;
+  
+  /* 文字色 */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0B0;
+  --text-muted: #6B6B80;
+  
+  /* 强调色 */
+  --accent-green: #00C853;
+  --accent-blue: #00B0FF;
+  --accent-orange: #FF9100;
+  --accent-red: #FF5252;
+  --accent-purple: #7C4DFF;
+  --accent-pink: #FF4081;
+}
+
 @layer base {
   body {
-    @apply bg-slate-900 text-slate-100 antialiased;
+    @apply antialiased;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
   }
   
   * {
     scrollbar-width: thin;
-    scrollbar-color: #475569 transparent;
+    scrollbar-color: var(--text-muted) transparent;
   }
   
   *::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
   }
   
   *::-webkit-scrollbar-track {
@@ -21,25 +62,297 @@
   }
   
   *::-webkit-scrollbar-thumb {
-    background-color: #475569;
-    border-radius: 4px;
+    background-color: var(--text-muted);
+    border-radius: 3px;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
   }
 }
 
 @layer components {
+  /* 按钮样式 */
   .btn-primary {
-    @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply font-semibold py-3 px-6 rounded-xl transition-all duration-200;
+    background: linear-gradient(135deg, var(--minion-yellow) 0%, var(--minion-yellow-dark) 100%);
+    color: #1a1a2e;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
   }
   
   .btn-secondary {
-    @apply bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply font-medium py-2 px-4 rounded-lg transition-colors;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    color: var(--text-primary);
   }
   
+  .btn-secondary:hover {
+    background: var(--bg-elevated);
+    border-color: var(--minion-yellow);
+  }
+  
+  /* 卡片样式 */
   .card {
-    @apply bg-slate-800/50 border border-slate-700 rounded-xl p-4;
+    @apply rounded-2xl p-6;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
   
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+  
+  /* 输入框样式 */
   .input {
-    @apply bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+    @apply rounded-xl px-6 py-4 text-base transition-all duration-200;
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    color: var(--text-primary);
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: var(--minion-yellow);
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+  }
+  
+  .input::placeholder {
+    color: var(--text-muted);
+  }
+  
+  /* 命令输入框 */
+  .command-input {
+    @apply w-full text-lg;
+    background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+  }
+  
+  .command-input:focus {
+    border-color: var(--minion-yellow);
+    box-shadow: 
+      0 0 0 4px rgba(255, 215, 0, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* 快捷命令按钮 */
+  .quick-command {
+    @apply flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-200;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 80px;
+  }
+  
+  .quick-command:hover {
+    transform: scale(1.05);
+    background: var(--bg-elevated);
+    border-color: var(--minion-yellow);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  }
+  
+  .quick-command:active {
+    transform: scale(0.98);
+  }
+  
+  /* 任务项 */
+  .task-item {
+    @apply flex items-center gap-4 p-4 rounded-xl transition-all duration-200;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .task-item:hover {
+    background: var(--bg-elevated);
+    border-color: rgba(255, 215, 0, 0.2);
+  }
+  
+  /* 状态指示器 */
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+  
+  .status-dot.animated {
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  /* 进度条 */
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden;
+    background: var(--bg-card);
+  }
+  
+  .progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-300;
+    background: linear-gradient(90deg, var(--minion-yellow) 0%, var(--accent-green) 100%);
+  }
+  
+  /* 小黄人发光效果 */
+  .minion-glow {
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 0 60px rgba(255, 215, 0, 0.15);
+  }
+  
+  /* 发光文字 */
+  .glow-text {
+    text-shadow: 0 0 20px currentColor;
+  }
+  
+  /* 渐变文字 */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--minion-yellow) 0%, var(--accent-orange) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* 玻璃态效果 */
+  .glass {
+    @apply backdrop-blur-xl;
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+  }
+  
+  /* 动画 */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 10px currentColor;
+    }
+    50% {
+      box-shadow: 0 0 25px currentColor, 0 0 35px currentColor;
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 使用动画类 */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  .animate-shake {
+    animation: shake 0.5s ease-in-out infinite;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+  }
+  
+  /* 加载动画 */
+  .loading-dots::after {
+    content: '';
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  /* 背景网格 */
+  .bg-grid {
+    background-image: 
+      linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* 噪点纹理 */
+  .noise {
+    position: relative;
+  }
+  
+  .noise::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+  .card {
+    @apply p-4;
+  }
+  
+  .btn-primary {
+    @apply py-2 px-4;
+  }
+  
+  .command-input {
+    @apply text-base py-3 px-4;
   }
 }
